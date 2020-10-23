@@ -21,7 +21,7 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
         case like
         case between
         
-        internal var `operator`: NSComparisonPredicate.Operator {
+        internal var raw: NSComparisonPredicate.Operator {
             switch self {
             case .equalTo: return .equalTo
             case .notEqualTo: return .notEqualTo
@@ -37,10 +37,10 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
         }
     }
     
-    public let predicate: NSPredicate
+    public let raw: NSPredicate
     
     public init(_ predicate: NSPredicate) {
-        self.predicate = predicate
+        self.raw = predicate
     }
     
     public init<Value>(
@@ -50,11 +50,11 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
         modifier: NSComparisonPredicate.Modifier = .direct,
         options: NSComparisonPredicate.Options = []
     ) {
-        self.predicate = NSComparisonPredicate(
+        self.raw = NSComparisonPredicate(
             leftExpression: NSExpression(forKeyPath: keyPath),
             rightExpression: NSExpression(forConstantValue: value),
             modifier: modifier,
-            type: type.operator,
+            type: type.raw,
             options: options
         )
     }
@@ -66,17 +66,17 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
         modifier: NSComparisonPredicate.Modifier = .direct,
         options: NSComparisonPredicate.Options = []
     ) {
-        self.predicate = NSComparisonPredicate(
+        self.raw = NSComparisonPredicate(
             leftExpression: NSExpression(forKeyPath: keyPath),
             rightExpression: NSExpression(forConstantValue: value),
             modifier: modifier,
-            type: type.operator,
+            type: type.raw,
             options: options
         )
     }
     
     var format: String {
-        return predicate.predicateFormat
+        return raw.predicateFormat
     }
     
     public var description: String {

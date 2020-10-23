@@ -8,7 +8,7 @@
 import Foundation
 
 public func and<Object>(_ predicates: [Predicate<Object>]) -> Predicate<Object> {
-    return Predicate<Object>(NSCompoundPredicate(andPredicateWithSubpredicates: predicates.map(\.predicate)))
+    return Predicate<Object>(NSCompoundPredicate(andPredicateWithSubpredicates: predicates.map(\.raw)))
 }
 
 public func and<Object>(_ p1: Predicate<Object>, _ p2: Predicate<Object>, _ otherPredicates: Predicate<Object>...) -> Predicate<Object> {
@@ -20,7 +20,7 @@ public func && <Object>(lhs: Predicate<Object>, rhs: Predicate<Object>) -> Predi
 }
 
 public func or<Object>(_ predicates: [Predicate<Object>]) -> Predicate<Object> {
-    return Predicate<Object>(NSCompoundPredicate(orPredicateWithSubpredicates: predicates.map(\.predicate)))
+    return Predicate<Object>(NSCompoundPredicate(orPredicateWithSubpredicates: predicates.map(\.raw)))
 }
 
 public func or<Object>(_ p1: Predicate<Object>, _ p2: Predicate<Object>, _ otherPredicates: Predicate<Object>...) -> Predicate<Object> {
@@ -32,7 +32,7 @@ public func || <Object>(lhs: Predicate<Object>, rhs: Predicate<Object>) -> Predi
 }
 
 public func not<Object>(_ predicate: Predicate<Object>) -> Predicate<Object> {
-    return Predicate<Object>(NSCompoundPredicate(notPredicateWithSubpredicate: predicate.predicate))
+    return Predicate<Object>(NSCompoundPredicate(notPredicateWithSubpredicate: predicate.raw))
 }
 
 prefix public func ! <Object>(rhs: Predicate<Object>) -> Predicate<Object> {

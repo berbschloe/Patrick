@@ -27,7 +27,7 @@ extension Realm {
 extension Results where Element: NSObjectProtocol {
     
     public func filter(_ predicate: Predicate<Element>) -> Results<Element> {
-        return filter(predicate.predicate)
+        return filter(predicate.raw)
     }
     
     public func sorted<Value>(byKeyPath keyPath: KeyPath<Element, Value>, ascending: Bool = true) -> Results<Element> {
@@ -36,7 +36,7 @@ extension Results where Element: NSObjectProtocol {
     
     public func sorted<S: Sequence>(by sortDescriptors: S) -> Results<Element> where S.Iterator.Element == SortDescriptor<Element> {
         return sorted(by: sortDescriptors.map {
-            RealmSwift.SortDescriptor($0.sortDescriptor)
+            RealmSwift.SortDescriptor($0)
         })
     }
 }
@@ -44,7 +44,7 @@ extension Results where Element: NSObjectProtocol {
 extension List where Element: NSObjectProtocol {
     
     public func filter(_ predicate: Predicate<Element>) -> Results<Element> {
-        return filter(predicate.predicate)
+        return filter(predicate.raw)
     }
     
     public func sorted<Value>(byKeyPath keyPath: KeyPath<Element, Value>, ascending: Bool = true) -> Results<Element> {
@@ -53,15 +53,15 @@ extension List where Element: NSObjectProtocol {
     
     public func sorted<S: Sequence>(by sortDescriptors: S) -> Results<Element> where S.Iterator.Element == SortDescriptor<Element> {
         return sorted(by: sortDescriptors.map {
-            RealmSwift.SortDescriptor($0.sortDescriptor)
+            RealmSwift.SortDescriptor($0)
         })
     }
 }
 
 extension RealmSwift.SortDescriptor {
     
-    internal init(_ sortDescriptor: NSSortDescriptor) {
-        self.init(keyPath: sortDescriptor.key!, ascending: sortDescriptor.ascending)
+    internal init<Object>(_ sortDescriptor: SortDescriptor<Object>) {
+        self.init(keyPath: sortDescriptor.raw.key!, ascending: sortDescriptor.raw.ascending)
     }
 }
 

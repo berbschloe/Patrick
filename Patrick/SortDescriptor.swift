@@ -9,22 +9,22 @@ import Foundation
 
 public struct SortDescriptor<Object: NSObjectProtocol>: CustomStringConvertible {
 
-    public let sortDescriptor: NSSortDescriptor
+    public let raw: NSSortDescriptor
     
     var format: String {
-        return "\(sortDescriptor.key!) \(sortDescriptor.ascending ? "ASC" : "DESC")"
+        return "\(raw.key!) \(raw.ascending ? "ASC" : "DESC")"
     }
     
     public init(_ sortDescriptor: NSSortDescriptor) {
-        self.sortDescriptor = sortDescriptor
+        self.raw = sortDescriptor
     }
     
     public init<Value>(_ keyPath: KeyPath<Object, Value>, ascending: Bool) {
-        self.sortDescriptor = NSSortDescriptor(keyPath: keyPath, ascending: ascending)
+        self.raw = NSSortDescriptor(keyPath: keyPath, ascending: ascending)
     }
     
     public init(_ key: String, ascending: Bool) {
-        self.sortDescriptor = NSSortDescriptor(key: key, ascending: ascending)
+        self.raw = NSSortDescriptor(key: key, ascending: ascending)
     }
     
     public var description: String {
