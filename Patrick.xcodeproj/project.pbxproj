@@ -11,6 +11,7 @@
 		7701CF3125355576003323E0 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7701CF3025355576003323E0 /* RealmSwift */; };
 		7701CF3525355588003323E0 /* Realm+Patrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7701CF3425355588003323E0 /* Realm+Patrick.swift */; };
 		7701CF3925355D7D003323E0 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7701CF3825355D7D003323E0 /* Query.swift */; };
+		7705C12D25432390006DC95A /* CoreData+Patrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7705C12C25432390006DC95A /* CoreData+Patrick.swift */; };
 		7777C2DA252B98F4004D827E /* Patrick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7777C2D0252B98F4004D827E /* Patrick.framework */; };
 		7777C2DF252B98F4004D827E /* PatrickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7777C2DE252B98F4004D827E /* PatrickTests.swift */; };
 		7777C2E1252B98F4004D827E /* Patrick.h in Headers */ = {isa = PBXBuildFile; fileRef = 7777C2D3252B98F4004D827E /* Patrick.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		7701CF3425355588003323E0 /* Realm+Patrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+Patrick.swift"; sourceTree = "<group>"; };
 		7701CF3825355D7D003323E0 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		7705C12C25432390006DC95A /* CoreData+Patrick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Patrick.swift"; sourceTree = "<group>"; };
 		7777C2D0252B98F4004D827E /* Patrick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Patrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7777C2D3252B98F4004D827E /* Patrick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Patrick.h; sourceTree = "<group>"; };
 		7777C2D4252B98F4004D827E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				7701CF3825355D7D003323E0 /* Query.swift */,
 				7777C2F6252BA1A3004D827E /* Compounds.swift */,
 				7701CF3425355588003323E0 /* Realm+Patrick.swift */,
+				7705C12C25432390006DC95A /* CoreData+Patrick.swift */,
 			);
 			path = Patrick;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				7701CF3925355D7D003323E0 /* Query.swift in Sources */,
 				7701CF3525355588003323E0 /* Realm+Patrick.swift in Sources */,
 				7777C2F3252BA0FF004D827E /* SortDescriptor.swift in Sources */,
+				7705C12D25432390006DC95A /* CoreData+Patrick.swift in Sources */,
 				7777C2ED252B991A004D827E /* Predicate.swift in Sources */,
 				7777C2F7252BA1A3004D827E /* Compounds.swift in Sources */,
 			);
