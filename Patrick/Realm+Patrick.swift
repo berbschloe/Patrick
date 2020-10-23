@@ -12,7 +12,7 @@ import RealmSwift
 
 extension Realm {
     
-    public func perform<O: Object>(query: Query<O>) -> Results<O> {
+    public func query<O: Object>(_ query: Query<O>) -> Results<O> {
         var results = objects(O.self)
         if let predicate = query.predicate {
             results = results.filter(predicate)
