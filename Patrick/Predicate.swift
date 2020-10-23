@@ -39,8 +39,40 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
     
     public let predicate: NSPredicate
     
-    init(_ predicate: NSPredicate) {
+    public init(_ predicate: NSPredicate) {
         self.predicate = predicate
+    }
+    
+    public init<Value>(
+        _ keyPath: KeyPath<Object, Value>,
+        _ type: Predicate<Object>.Operator,
+        _ value: Value,
+        modifier: NSComparisonPredicate.Modifier = .direct,
+        options: NSComparisonPredicate.Options = []
+    ) {
+        self.predicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: keyPath),
+            rightExpression: NSExpression(forConstantValue: value),
+            modifier: modifier,
+            type: type.operator,
+            options: options
+        )
+    }
+    
+    public init<Value>(
+        _ keyPath: String,
+        _ type: Predicate<Object>.Operator,
+        _ value: Value,
+        modifier: NSComparisonPredicate.Modifier = .direct,
+        options: NSComparisonPredicate.Options = []
+    ) {
+        self.predicate = NSComparisonPredicate(
+            leftExpression: NSExpression(forKeyPath: keyPath),
+            rightExpression: NSExpression(forConstantValue: value),
+            modifier: modifier,
+            type: type.operator,
+            options: options
+        )
     }
     
     var format: String {
@@ -52,29 +84,13 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
     }
 }
 
-public func predicate<Root, Value>(
-    _ keyPath: KeyPath<Root, Value>,
-    _ type: Predicate<Root>.Operator,
-    _ value: Value,
-    modifier: NSComparisonPredicate.Modifier = .direct,
-    options: NSComparisonPredicate.Options = []
-) -> Predicate<Root> {
-    return Predicate(NSComparisonPredicate(
-        leftExpression: NSExpression(forKeyPath: keyPath),
-        rightExpression: NSExpression(forConstantValue: value),
-        modifier: modifier,
-        type: type.operator,
-        options: options
-    ))
-}
-
 func equalTo<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .equalTo, value)
+    return Predicate(keyPath, .equalTo, value)
 }
 
 func == <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
@@ -87,7 +103,7 @@ func notEqualTo<Root, Value>(
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .notEqualTo, value)
+    return Predicate(keyPath, .notEqualTo, value)
 }
 
 func != <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
@@ -100,7 +116,7 @@ func lessThan<Root, Value>(
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .lessThan, value)
+    return Predicate(keyPath, .lessThan, value)
 }
 
 func < <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
@@ -113,7 +129,7 @@ func lessThanOrEqualTo<Root, Value>(
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .lessThanOrEqualTo, value)
+    return Predicate(keyPath, .lessThanOrEqualTo, value)
 }
 
 func <= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
@@ -126,7 +142,7 @@ func greaterThan<Root, Value>(
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .greaterThan, value)
+    return Predicate(keyPath, .greaterThan, value)
 }
 
 func > <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
@@ -139,7 +155,7 @@ func greaterThanOrEqualTo<Root, Value>(
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .greaterThanOrEqualTo, value)
+    return Predicate(keyPath, .greaterThanOrEqualTo, value)
 }
 
 func >= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
@@ -152,7 +168,7 @@ func beginsWith<Root, Value>(
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .beginsWith, value)
+    return Predicate(keyPath, .beginsWith, value)
 }
 
 func endsWith<Root, Value>(
@@ -161,7 +177,7 @@ func endsWith<Root, Value>(
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .endsWith, value)
+    return Predicate(keyPath, .endsWith, value)
 }
 
 func isLike<Root, Value>(
@@ -170,7 +186,7 @@ func isLike<Root, Value>(
     modifier: NSComparisonPredicate.Modifier = .direct,
     options: NSComparisonPredicate.Options = []
 ) -> Predicate<Root> {
-    return predicate(keyPath, .like, value)
+    return Predicate(keyPath, .like, value)
 }
 
 func ~= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {

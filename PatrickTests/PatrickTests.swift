@@ -16,6 +16,8 @@ class PatrickTests: XCTestCase {
         @objc var age: Int
         @objc var tags: [String] = []
         
+        @objc var pet: Pet?
+        
         init(id: Int = 0, name: String? = nil, age: Int = 0) {
             self.id = id
             self.name = name
@@ -23,12 +25,28 @@ class PatrickTests: XCTestCase {
         }
     }
     
+    class Pet: NSObject {
+        @objc var name: String
+        
+        init(name: String) {
+            self.name = name
+        }
+    }
+    
+    func testConstructors() {
+        let predicate = Predicate<Person>(\.name, .equalTo, "Foo")
+        XCTAssertEqual(predicate.format, "name == \"Foo\"")
+        
+        let sortDescriptor = SortDescriptor<Person>(\.name, ascending: true)
+        XCTAssertEqual(sortDescriptor.format, "name ASC")
+    }
+
     func testExample() {
         let predicate1: Predicate<Person> = not(or(equalTo(\.name, ""), lessThan(\.age, 10)))
-        XCTAssertEqual(predicate1.format, "NOT (name == \"\" OR id == 0)")
+        XCTAssertEqual(predicate1.format, "NOT (name == \"\" OR age < 10)")
         
         let predicate2: Predicate<Person> = !(\.name == "" || \.age < 10)
-        XCTAssertEqual(predicate2.format, "NOT (name == \"\" OR id == 0)")
+        XCTAssertEqual(predicate2.format, "NOT (name == \"\" OR age < 10)")
     }
     
     func testEqualTo() {
@@ -115,6 +133,16 @@ class PatrickTests: XCTestCase {
         XCTAssertEqual(predicate.format, "age BETWEEN {10, 20}")
     }
     
+    func testRelationship() {
+        let predicate: Predicate<Person> = equalTo(\Person.pet?.name, "Fido")
+        XCTAssertEqual(predicate.format, "pet.name == \"Fido\"")
+    }
+    
+    func testStringPredicate() {
+        let predicate: Predicate<Person> = Predicate("name", .equalTo, "Foo")
+        XCTAssertEqual(predicate.format, "name == \"Foo\"")
+    }
+    
     func testNot() {
         let notPredicate1: Predicate<Person> = not(equalTo(\.name, ""))
         XCTAssertEqual(notPredicate1.format, "NOT name == \"\"")
@@ -144,5 +172,10 @@ class PatrickTests: XCTestCase {
         
         let sortDescriptor2: SortDescriptor<Person> = sortedBy(\.age, ascending: false)
         XCTAssertEqual(sortDescriptor2.format, "age DESC")
+    }
+    
+    func testStringSortedBy() {
+        let sortDescriptor: SortDescriptor<Person> = sortedBy("name", ascending: true)
+        XCTAssertEqual(sortDescriptor.format, "name ASC")
     }
 }

@@ -15,8 +15,16 @@ public struct SortDescriptor<Object: NSObjectProtocol>: CustomStringConvertible 
         return "\(sortDescriptor.key!) \(sortDescriptor.ascending ? "ASC" : "DESC")"
     }
     
-    init(_ sortDescriptor: NSSortDescriptor) {
+    public init(_ sortDescriptor: NSSortDescriptor) {
         self.sortDescriptor = sortDescriptor
+    }
+    
+    public init<Value>(_ keyPath: KeyPath<Object, Value>, ascending: Bool) {
+        self.sortDescriptor = NSSortDescriptor(keyPath: keyPath, ascending: ascending)
+    }
+    
+    public init(_ key: String, ascending: Bool) {
+        self.sortDescriptor = NSSortDescriptor(key: key, ascending: ascending)
     }
     
     public var description: String {
@@ -25,5 +33,9 @@ public struct SortDescriptor<Object: NSObjectProtocol>: CustomStringConvertible 
 }
 
 func sortedBy<Root, Value>(_ keyPath: KeyPath<Root, Value>, ascending: Bool) -> SortDescriptor<Root> {
-    return SortDescriptor(NSSortDescriptor(keyPath: keyPath, ascending: ascending))
+    return SortDescriptor(keyPath, ascending: ascending)
+}
+
+func sortedBy<Root>(_ key: String, ascending: Bool) -> SortDescriptor<Root> {
+    return SortDescriptor(key, ascending: ascending)
 }
