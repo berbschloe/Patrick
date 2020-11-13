@@ -12,6 +12,7 @@ import CoreData
 
 extension Query where Object: NSManagedObject {
     
+    /// Returns a NSFetchRequest representation of the currenty query.
     public func fetchRequest() -> NSFetchRequest<Object> {
         let request = NSFetchRequest<Object>()
         request.entity = Object.entity()
@@ -23,10 +24,12 @@ extension Query where Object: NSManagedObject {
 
 extension NSManagedObjectContext {
     
+    /// Returns an array of objects that meet the criteria specified by a given query.
     public func query<Object: NSManagedObject>(_ query: Query<Object>) throws -> [Object] {
         return try fetch(query.fetchRequest())
     }
     
+    /// Returns a NSFetchedResultsController for the given query, section, and cache.
     public func fetchedResultsController<Object: NSManagedObject, Value>(
         query: Query<Object>,
         sectionNameKeyPath: KeyPath<Object, Value>? = nil,

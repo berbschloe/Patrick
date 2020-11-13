@@ -7,8 +7,10 @@
 
 import Foundation
 
+/// A typesafe representation of a NSComparisonPredicate.
 public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
     
+    /// Defines the type of comparison
     public enum Operator {
         case equalTo
         case notEqualTo
@@ -21,7 +23,8 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
         case like
         case between
         
-        internal var raw: NSComparisonPredicate.Operator {
+        /// The  raw operator.
+        public var raw: NSComparisonPredicate.Operator {
             switch self {
             case .equalTo: return .equalTo
             case .notEqualTo: return .notEqualTo
@@ -37,6 +40,7 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
         }
     }
     
+    // The raw predicate.
     public let raw: NSPredicate
     
     public init(_ predicate: NSPredicate) {
@@ -75,7 +79,8 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
         )
     }
     
-    var format: String {
+    /// The predicate's format string.
+    public var format: String {
         return raw.predicateFormat
     }
     
@@ -84,7 +89,7 @@ public struct Predicate<Object: NSObjectProtocol>: CustomStringConvertible {
     }
 }
 
-func equalTo<Root, Value>(
+public func equalTo<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -93,11 +98,11 @@ func equalTo<Root, Value>(
     return Predicate(keyPath, .equalTo, value)
 }
 
-func == <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
+public func == <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
     return equalTo(lhs, rhs)
 }
 
-func notEqualTo<Root, Value>(
+public func notEqualTo<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -106,11 +111,11 @@ func notEqualTo<Root, Value>(
     return Predicate(keyPath, .notEqualTo, value)
 }
 
-func != <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
+public func != <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
     return notEqualTo(lhs, rhs)
 }
 
-func lessThan<Root, Value>(
+public func lessThan<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -119,11 +124,11 @@ func lessThan<Root, Value>(
     return Predicate(keyPath, .lessThan, value)
 }
 
-func < <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
+public func < <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
     return lessThan(lhs, rhs)
 }
 
-func lessThanOrEqualTo<Root, Value>(
+public func lessThanOrEqualTo<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -132,11 +137,11 @@ func lessThanOrEqualTo<Root, Value>(
     return Predicate(keyPath, .lessThanOrEqualTo, value)
 }
 
-func <= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
+public func <= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
     return lessThanOrEqualTo(lhs, rhs)
 }
 
-func greaterThan<Root, Value>(
+public func greaterThan<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -145,11 +150,11 @@ func greaterThan<Root, Value>(
     return Predicate(keyPath, .greaterThan, value)
 }
 
-func > <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
+public func > <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
     return greaterThan(lhs, rhs)
 }
 
-func greaterThanOrEqualTo<Root, Value>(
+public func greaterThanOrEqualTo<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -158,11 +163,11 @@ func greaterThanOrEqualTo<Root, Value>(
     return Predicate(keyPath, .greaterThanOrEqualTo, value)
 }
 
-func >= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
+public func >= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
     return greaterThanOrEqualTo(lhs, rhs)
 }
 
-func beginsWith<Root, Value>(
+public func beginsWith<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -171,7 +176,7 @@ func beginsWith<Root, Value>(
     return Predicate(keyPath, .beginsWith, value)
 }
 
-func endsWith<Root, Value>(
+public func endsWith<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -180,7 +185,7 @@ func endsWith<Root, Value>(
     return Predicate(keyPath, .endsWith, value)
 }
 
-func isLike<Root, Value>(
+public func isLike<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -189,11 +194,11 @@ func isLike<Root, Value>(
     return Predicate(keyPath, .like, value)
 }
 
-func ~= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
+public func ~= <Root, Value>(lhs: KeyPath<Root, Value>, rhs: Value) -> Predicate<Root> {
     return isLike(lhs, rhs)
 }
 
-func contains<Root, Value>(
+public func contains<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: Value.Element,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -208,7 +213,7 @@ func contains<Root, Value>(
     ))
 }
 
-func insideOf<Root, Value>(
+public func insideOf<Root, Value>(
     _ keyPath: KeyPath<Root, Value.Element>,
     _ value: Value,
     modifier: NSComparisonPredicate.Modifier = .direct,
@@ -223,11 +228,11 @@ func insideOf<Root, Value>(
     ))
 }
 
-func << <Root, Value>(lhs: KeyPath<Root, Value.Element>, rhs: Value) -> Predicate<Root> where Value: Sequence {
+public func << <Root, Value>(lhs: KeyPath<Root, Value.Element>, rhs: Value) -> Predicate<Root> where Value: Sequence {
     return insideOf(lhs, rhs)
 }
 
-func between<Root, Value>(
+public func between<Root, Value>(
     _ keyPath: KeyPath<Root, Value>,
     _ value: ClosedRange<Value>,
     modifier: NSComparisonPredicate.Modifier = .direct,

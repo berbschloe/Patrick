@@ -7,11 +7,14 @@
 
 import Foundation
 
+/// A typesafe representation of a NSSortDescriptor.
 public struct SortDescriptor<Object: NSObjectProtocol>: CustomStringConvertible {
 
+    /// The raw sort descriptor.
     public let raw: NSSortDescriptor
     
-    var format: String {
+    /// The sort descriptor's format string.
+    public var format: String {
         return "\(raw.key!) \(raw.ascending ? "ASC" : "DESC")"
     }
     
@@ -32,10 +35,10 @@ public struct SortDescriptor<Object: NSObjectProtocol>: CustomStringConvertible 
     }
 }
 
-func sortedBy<Root, Value>(_ keyPath: KeyPath<Root, Value>, ascending: Bool) -> SortDescriptor<Root> {
+public func sortedBy<Root, Value>(_ keyPath: KeyPath<Root, Value>, ascending: Bool) -> SortDescriptor<Root> {
     return SortDescriptor(keyPath, ascending: ascending)
 }
 
-func sortedBy<Root>(_ key: String, ascending: Bool) -> SortDescriptor<Root> {
+public func sortedBy<Root>(_ key: String, ascending: Bool) -> SortDescriptor<Root> {
     return SortDescriptor(key, ascending: ascending)
 }
